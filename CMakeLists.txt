@@ -8,12 +8,10 @@ set(LIBIGL_EIGEN_VERSION 3.3.7 CACHE STRING "Eigen version")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # libigl
-option(LIBIGL_WITH_OPENGL            "Use OpenGL"         ON)
-option(LIBIGL_WITH_OPENGL_GLFW       "Use GLFW"           ON)
-option(LIBIGL_WITH_OPENGL_GLFW_IMGUI "Use ImGui"          ON)
-option(LIBIGL_WITH_VIEWER            "Use OpenGL viewer"  ON)
-
-find_package(LIBIGL QUIET)
+option(LIBIGL_OPENGL            "Use OpenGL"         ON)
+option(LIBIGL_GLFW       		"Use GLFW"           ON)
+option(LIBIGL_IMGUI				"Use ImGui"          ON)
+include(libigl)
 
 # Add your project files
 if(MSVC)
@@ -31,7 +29,7 @@ install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/lib)
 
 file(GLOB EXAMPLEFILES example/*.cpp)
 add_executable(example_${PROJECT_NAME} ${EXAMPLEFILES})
-target_link_libraries(example_${PROJECT_NAME} ${PROJECT_NAME} igl::core igl::opengl_glfw igl::opengl_glfw_imgui)
+target_link_libraries(example_${PROJECT_NAME} ${PROJECT_NAME} igl::core igl::glfw igl::imgui)
 
 file(GLOB TESTFILES tests/*.cpp)
 add_executable(tests_${PROJECT_NAME} ${TESTFILES})
