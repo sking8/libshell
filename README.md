@@ -53,6 +53,14 @@ This procedure will build:
 
 The library itself depends only on Eigen (set the environment variable `EIGEN3_INCLUDE_DIR` to point to your Eigen folder). The example program includes a viewer which uses libigl.
 
+The only dependencies for libigl are STL, Eigen, libigl and the dependencies of the igl::opengl::glfw::Viewer (OpenGL, glad and GLFW). The CMake build system will automatically download libigl and its dependencies using CMake FetchContent, thus requiring no setup on your part.
+
+To use a local copy of libigl rather than downloading the repository via FetchContent, you can use the CMake cache variable FETCHCONTENT_SOURCE_DIR_LIBIGL when configuring your CMake project for the first time:
+
+    cmake -DFETCHCONTENT_SOURCE_DIR_LIBIGL=<path-to-libigl> ..
+    
+When changing this value, do not forget to clear your CMakeCache.txt, or to update the cache variable via cmake-gui or ccmake.
+
 ## Compiling on Windows
 
 Due to poor interoperation of the Eigen library with the MSVC compiler, Release mode compilation of the derivative code on Windows can take forever (over 8 hours). The issue appears to have been resolved as of the 2019 edition of MSVC. If you are having issues with compile time, to solve the problem add EIGEN_STRONG_INLINE=inline to your preprocessor macros when building libshell.
