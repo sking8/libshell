@@ -48,9 +48,9 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
             }
         }
         std::vector<Eigen::Triplet<double> > Dcoeffs;
-        for (int i = 0; i < freeDOFs; i++)
+        for (int i = 0; i < freeDOFs; i++) //not diagonal preconditioning
         {
-            double val = (maxvals[i] == 0.0 ? 1.0 : 1.0 / std::sqrt(maxvals[i]));            
+            double val = (maxvals[i] == 0.0 ? 1.0 : 1.0 / std::sqrt(maxvals[i])); //clamping here?
             Dcoeffs.push_back({ i,i, val });
         }
         Eigen::SparseMatrix<double> D(freeDOFs, freeDOFs);
@@ -63,7 +63,7 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
         if (solver.info() == Eigen::Success)
         {
             Eigen::VectorXd rhs = D * force;
-            Eigen::VectorXd descentDir = D * solver.solve(rhs);
+            Eigen::VectorXd descentDir = D * solver.solve(rhs); //why multiply here?
             std::cout << "solved" << std::endl;
             Eigen::MatrixXd newPos = curPos;
             for (int i = 0; i < nverts; i++)
@@ -74,12 +74,12 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
 
 
 
-            double newenergy = LibShell::ElasticShell<SFF>::elasticEnergy(mesh, newPos, newEdgeDofs, mat, restState, &derivative, NULL);
+            double new_energy = LibShell::ElasticShell<SFF>::elasticEnergy(mesh, newPos, newEdgeDofs, mat, restState, &derivative, NULL);
             force = -derivative;
 
             double forceResidual = force.norm();
 
-            if (newenergy <= energy)
+            if (new_energy <= energy) //line search
             {
                 std::cout << "Old energy: " << energy << " new energy: " << newenergy << " force residual " << forceResidual << " pos change " << descentDir.segment(0, 3 * nverts).norm() << " theta change " << descentDir.segment(3 * nverts, nedgedofs*nedges).norm() << " lambda " << reg << std::endl;
                 curPos = newPos;
