@@ -1,0 +1,7 @@
+includes("../src/xmake.lua")
+add_rules("mode.debug","mode.release")
+add_rules("plugin.vsxmake.autoupdate")
+target("libshell_tests")
+    set_kind("binary")
+    add_files("*.cpp")
+    add_deps("libshell")

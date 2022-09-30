@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     Eigen::MatrixXd origV;
     Eigen::MatrixXi F;
 
-    std::vector<std::string> prefixes = { "./", "./example/", "../", "../example/" };
+    std::vector<std::string> prefixes = { "./", "./example/", "../", "../example/", "../../../../../example/"};
 
     bool found = false;
     for (auto& it : prefixes)

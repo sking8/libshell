@@ -81,7 +81,7 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
 
             if (new_energy <= energy) //line search
             {
-                std::cout << "Old energy: " << energy << " new energy: " << newenergy << " force residual " << forceResidual << " pos change " << descentDir.segment(0, 3 * nverts).norm() << " theta change " << descentDir.segment(3 * nverts, nedgedofs*nedges).norm() << " lambda " << reg << std::endl;
+                std::cout << "Old energy: " << energy << " new energy: " << new_energy << " force residual " << forceResidual << " pos change " << descentDir.segment(0, 3 * nverts).norm() << " theta change " << descentDir.segment(3 * nverts, nedgedofs*nedges).norm() << " lambda " << reg << std::endl;
                 curPos = newPos;
                 curEdgeDOFs = newEdgeDofs;
                 reg /= 2.0;
@@ -89,7 +89,7 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
             }
             else
             {
-                std::cout << "Not a descent direction; old energy: " << energy << " new energy: " << newenergy << " lambda now: " << 2.0*reg << std::endl;
+                std::cout << "Not a descent direction; old energy: " << energy << " new energy: " << new_energy << " lambda now: " << 2.0*reg << std::endl;
             }
         }
         else
