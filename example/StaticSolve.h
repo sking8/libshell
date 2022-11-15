@@ -28,7 +28,7 @@ void takeOneStep(const LibShell::MeshConnectivity &mesh,
         Eigen::VectorXd derivative;
         std::vector<Eigen::Triplet<double> > hessian;
 
-        double energy = LibShell::ElasticShell<SFF>::elasticEnergy(mesh, curPos, curEdgeDOFs, mat, restState, &derivative, &hessian);
+        double energy = LibShell::ElasticShell<SFF>::elasticEnergy(mesh, curPos, curEdgeDOFs, mat, restState, &derivative, &hessian); //this maybe slow here
 
         Eigen::SparseMatrix<double> H(freeDOFs, freeDOFs);
         H.setFromTriplets(hessian.begin(), hessian.end());

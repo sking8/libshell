@@ -19,6 +19,7 @@ namespace LibShell {
     class StVKMaterial : public MaterialModel<SFF>
     {
     public:
+        StVKMaterial() {};
         StVKMaterial(double lameAlpha, double lameBeta) : lameAlpha_(lameAlpha), lameBeta_(lameBeta) {}
 
         /*
